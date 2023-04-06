@@ -58,9 +58,9 @@ $dataError = isset($arr) ? $arr : [];
             
             <div class="div-center">
             <div class="div-label"><label for="title" class="bold">Phone<span class="red-span">*</span></label></div>
-               <input class="input-center" name="phone" type="number" id="phone" value="<?php echo isset($dataInput['phone']) ? $dataInput['phone'] : ''; ?>" autocomplete="off">
+               <input class="input-center" name="phone" type="text" id="phone" value="<?php echo isset($dataInput['phone']) ? $dataInput['phone'] : ''; ?>" autocomplete="off">
             </div>
-            <div class="span-div"><span style="color:red"><?php echo isset($dataError['err_phone']) ? $dataError['err_phone'] : ''; ?></span></div>
+            <div class="span-div"><span id="err_phone" style="color:red"><?php echo isset($dataError['err_phone']) ? $dataError['err_phone'] : ''; ?></span></div>
 
             <div class="div-center">
             <div class="div-label"><label for="title" class="bold">Job<span class="red-span">*</span></label></div>
@@ -88,8 +88,8 @@ $dataError = isset($arr) ? $arr : [];
                <button class="btn-green" type="submit" onclick=" return check()">Save</button>
             </div>
       </form>
-      <img style="width: 150px; height:200px; margin-left: 24%" id="blah" src="<?php //echo isset($dataInput['imageData']) ? $dataInput['imageData'] : ''; 
-                                                                                 ?>" alt="your image" />
+      <!-- <img style="width: 150px; height:200px; margin-left: 24%" id="blah" src="<?php //echo isset($dataInput['photo']) ? $dataInput['photo'] : ''; ?>" alt="your image" /> -->
+      <img style="width: 150px; height:200px; margin-left: 24%" id="blah" src="/front_end/pictures/<?php echo isset($dataInput['photo']) ? $dataInput['photo'] : ''; ?>" alt="your image" />
       </div>
    </div>
 </div>
@@ -125,17 +125,24 @@ $dataError = isset($arr) ? $arr : [];
 <script>
 function check() { 
     var email = document.getElementById('email'); 
-    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
-    if (!filter.test(email.value)) { 
+    var filter_email = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
+    if (!filter_email.test(email.value)) { 
              $('#err_email').text('your type of email is wrong');
              email.focus; 
              return false; 
     }
     var birth = document.getElementById('birth'); 
-    var filter = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/; 
-    if (!filter.test(birth.value)) { 
+    var filter_birth = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/; 
+    if (!filter_birth.test(birth.value)) { 
              $('#err_birth').text('your type of birth is wrong');
              birth.focus; 
+             return false; 
+    }
+    var phone = document.getElementById('phone'); 
+    var filter_phone = /^\d{4}\-\d{3}\-\d{3}$/; 
+    if (!filter_phone.test(phone.value)) { 
+             $('#err_phone').text('your type of phone must be xxxx-xxx-xxx');
+             phone.focus; 
              return false; 
     }
     

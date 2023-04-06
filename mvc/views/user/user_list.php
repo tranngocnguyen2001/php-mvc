@@ -4,12 +4,13 @@ $currentPage = isset($data['currentPage']) ? $data['currentPage'] : '';
 $dataParam = isset($data['dataParam']) ? $data['dataParam'] : [];
 $datatotal = isset($data['total']) ? $data['total'] : [];
 $search_input= isset($data['search_input']) ? $data['search_input'] : [];
+//var_dump($search_input);
 ?>
 <input type="hidden" id="currentPage" value="<?=$currentPage ?>"/>
 <div class="wrapper">
    <div class="container">
       <div class="mb-30">
-         <div class="left-h2">
+         <div class="left-h2"> 
             <h2>User Managerment</h2>
          </div>
       </div>
@@ -22,7 +23,8 @@ $search_input= isset($data['search_input']) ? $data['search_input'] : [];
                </div>
                <div class=" ml-20 inline-block">
                   <label class="bold">Birth</label>
-                  <input id="birth" class="input-search" id="birth" type="text" value="<?= isset($search_input['birth'])  ? str_replace('-','/',$search_input['birth']) : ""  ?>" name="birth" autocomplete="off">
+                  <input id="birth" class="input-search" id="birth" type="text" value="<?= isset($search_input['birth'])  ? str_replace('-','/',$search_input['birth']) : ""?>" name="birth" autocomplete="off">
+                  
                </div>
                <div class="ml-20 inline-block">
                   <label class="bold">Sex</label>

@@ -15,16 +15,33 @@ class User extends Controller
 
    public function user_list($currentPage = 1, $input = '', $birth = '', $sex = '')
    {
+      
       $strInput = '';
       $strBirth = '';
       $strSex = '';
+      $tempBirth1="";
       if($input !=''){
          $tempInput = explode('=',$input);
          $strInput = $tempInput[1];
       }
       if($birth !=''){
-         $tempBirth = explode('=',$birth);
-         $strBirth = $tempBirth[1];
+         $tempBirth = explode('=',$birth);//tách dấu bằng ra khỏi chuỗi
+         $tempBirth1=str_replace('-','/',$tempBirth[1]);//birth trả về đsung định dạng
+         //var_dump($tempBirth1);
+         if($tempBirth[1]!=""){
+         $tempBirth2=explode('-',$tempBirth[1]);//tạo arr chứa các phần tử d-m-y
+         $arrBirth=[
+            $tempBirth2[2],
+            $tempBirth2[1],
+            $tempBirth2[0],
+         ];
+         $arrBirth1=implode('-',$arrBirth);//đảo ngược chuỗi từ d/m/y thành y/m/d để phục vụ tìm kiếm
+         $strBirth = $arrBirth1;
+      }
+      else
+      {
+         $strBirth="";
+      }
       }
       if($sex !=''){
          $tempSex = explode('=',$sex);
@@ -47,6 +64,12 @@ class User extends Controller
       $arrParam = [
          'input' => $strInput,
          'birth' => $strBirth,
+         'sex' => $strSex,
+      ];
+      //arr này trả về cái date đúng định dạng
+      $arrParam_return = [
+         'input' => $strInput,
+         'birth' => $tempBirth1,
          'sex' => $strSex,
       ];
       $params = 'input='.$arrParam['input'] . '/birth=' . $arrParam['birth'] . '/sex=' .  $arrParam['sex'];
@@ -74,7 +97,7 @@ class User extends Controller
          $this->view(
             'user/user_list',
             [
-               'user' => $records, 'currentPage' => $currentPage, 'pagingHtml' => $pagingHtml, 'total' => $totalRecords, 'search_input' => $arrParam
+               'user' => $records, 'currentPage' => $currentPage, 'pagingHtml' => $pagingHtml, 'total' => $totalRecords, 'search_input' => $arrParam_return
             ]
          );
       } else {
@@ -164,11 +187,7 @@ class User extends Controller
          if ($job === null || trim($job) === "") {
             $dataError['err_job'] = "Please enter your job";
          }
-         if ($phone != null || trim($phone) !== "") {
-            if (strlen($phone) != 10  && strlen($phone) != 11) {
-               $dataError['err_phone'] = "Your number phone must be type of 10 or 11 numbers";
-            }
-         } else {
+         if ($phone === null || trim($phone) === "") {
             $dataError['err_phone'] = "Please enter your phone";
          }
          $arrInput =
@@ -282,11 +301,7 @@ class User extends Controller
          if ($job === null || trim($job) === "") {
             $dataError['err_job'] = "Please enter your job";
          }
-         if ($phone != null || trim($phone) !== "") {
-            if (strlen($phone) != 10  && strlen($phone) != 11) {
-               $dataError['err_phone'] = "Your number phone must be type of 10 or 11 numbers";
-            }
-         } else {
+         if ($phone === null || trim($phone) === "") {
             $dataError['err_phone'] = "Please enter your phone";
          }
          $arrInput =

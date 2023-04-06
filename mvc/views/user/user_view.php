@@ -6,13 +6,33 @@ $error = isset($data['err']) ? $data['err'] : [];
 $id_user = $data_user["id_user"];
 $data_subject = isset($data['subject']) ? $data['subject'] : "";
 
-var_dump($data_skill);
+
 $selection = "<select style='height: 25px' form='my_form' name='id_subject[]'>";
 $selection .= "<option value='' disabled selected>Select Language</option>";
 foreach ($data_subject as $subject) : extract($subject);
    $selection .= "<option value='" . $id_subject . "'>" . $name_subject . "</option>";
 endforeach;
 $selection .= "</select>";
+
+function subject_selection($data_subject, $id_sub_input="")
+{
+$select="";
+$selection = "<select style='height: 25px' form='my_form' name='id_subject[]'>";
+$selection .= "<option value='' disabled selected>Select Language</option>";
+foreach ($data_subject as $subject) : extract($subject);
+if($id_subject==$id_sub_input)
+{ 
+   $select='selected';
+} 
+ else{
+   $select='';
+}
+   $selection .= "<option value='" . $id_subject . "'".$select.">" . $name_subject . "</option>";
+endforeach;
+$selection .= "</select>";
+return $selection;
+}
+
 
 ?>
 <div class="wrapper">
@@ -177,9 +197,9 @@ $selection .= "</select>";
                      <td rowspan="2" class="row-index text-center">
                         <p></p>
                      </td>
-                     <td rowspan="1" style="width: 15%;" class="text-center"><?=$selection?> </td>
-                     <td rowspan="1" style="width: 15%;" class="text-center"><input name="experience_years[]" form="my_form" value="<?= isset($data['skill'][$i]['experience_year']) ? $data['skill'][$i]['experience_year'] : [] ?>" autocomplete="off"/></td>
-                     <td rowspan="1" style="width: 15%;" class="text-center"><input name="last_used[]" form="my_form" value="<?= isset($data['skill'][$i]['last_use']) ? $data['skill'][$i]['last_use'] : []?>" autocomplete="off"/></td>
+                     <td rowspan="1" style="width: 15%;" class="text-center"><?=subject_selection($data_subject, $data['skill'][$i]['id_subject'])?> </td>
+                     <td rowspan="1" style="width: 15%;" class="text-center"><input name="experience_years[]" type="number" form="my_form" value="<?= isset($data['skill'][$i]['experience_year']) ? $data['skill'][$i]['experience_year'] : [] ?>" autocomplete="off"/></td>
+                     <td rowspan="1" style="width: 15%;" class="text-center"><input name="last_used[]" type="number" form="my_form" value="<?= isset($data['skill'][$i]['last_use']) ? $data['skill'][$i]['last_use'] : []?>" autocomplete="off"/></td>
                      <td  style="width: 5%; display: none" class="text-center"><input name="level-radio-<?=$i+1?>" type="radio" value="" form="my_form" checked/></td>
                      <td  style="width: 5%;" class="text-center"><input name="level-radio-<?=$i+1?>" type="radio" value="1" form="my_form" <?php if(isset($data['skill'][$i]['level']) && $data['skill'][$i]['level']==1){ echo"checked";} else{ echo "";} ?>/></td>
                      <td  style="width: 5%;" class="text-center"><input name="level-radio-<?=$i+1?>" type="radio" value="2" form="my_form" <?php if(isset($data['skill'][$i]['level']) && $data['skill'][$i]['level']==2){ echo"checked";} else{ echo "";} ?>/></td>
@@ -233,10 +253,10 @@ $selection .= "</select>";
                         <?= $selection ?>
                      </td>
                      <td class="text-center">
-                        <input name="experience_years[]" value="" form="my_form" autocomplete="off"/>
+                        <input name="experience_years[]" type="number" value="" form="my_form" autocomplete="off"/>
                      </td>
                      <td class="text-center">
-                        <input name="last_used[]" value="" form="my_form" autocomplete="off"/>
+                        <input name="last_used[]" type="number" value="" form="my_form" autocomplete="off"/>
                      </td>
                      <td class="text-center">
                         <input name="level-radio-${rowIdx}" type="radio" value="1" form="my_form"/>

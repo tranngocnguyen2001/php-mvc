@@ -33,7 +33,11 @@ class SkillModel
          $sqlArr[] = $sql;
       }
       $result = $this->db->executeWithTransaction($sqlArr);
-      return $result;
+      if($result)
+      {
+         header('location: /Skill/user_view/'.$id_user);
+
+      }
    } 
 
 

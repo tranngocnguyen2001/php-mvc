@@ -28,7 +28,15 @@ class Login extends Controller
          $this->view('/login', ['err' => $error]);
       } else {
          $password = $this->UserModel->get_user("password", "WHERE username='$username'");
-         $new_pass= $this->decrypt($password[0]['password']);
+         if(isset($password))
+         {
+            $new_pass= $this->decrypt($password[0]['password']);
+         }
+         else
+         {
+            $new_pass="";
+         }
+        
          if($pass==$new_pass){
             $_SESSION['user']=$username;
             header('location: /User/user_list');

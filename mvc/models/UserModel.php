@@ -33,6 +33,7 @@ class UserModel
          "records" => $resultData,
          "total_records" => $resultTotalRow[0]['TotalRows']
       ];
+      //var_dump($sqlData);die;
       return $result;
    }
 

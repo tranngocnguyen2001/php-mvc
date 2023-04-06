@@ -29,7 +29,6 @@ class Skill extends Controller
          $user = $this->UserModel->get_user("*", "WHERE id_user=$id_user", "");
          $this->view('user/user_view', ['user' => $user[0], "skill_list" => $skill, "subject" => $subject]);
       } else {
-         
          $error = [];
          $level[] = "";
          $arrUserSkill = [];
@@ -105,7 +104,8 @@ class Skill extends Controller
                }
                $subject = $this->SubjectModel->get_subject("id_subject, name_subject", "", "");
                $user = $this->UserModel->get_user("*", "WHERE id_user=$id_user", "");
-               $this->view('user/user_view', ['user' => $user[0], "skill_list" => $skill, "subject" => $subject]);
+               
+               // $this->view('user/user_view', ['user' => $user[0], "skill_list" => $skill, "subject" => $subject]);
             }
          }
       }
